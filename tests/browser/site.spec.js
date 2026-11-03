@@ -35,7 +35,7 @@ for (const route of routes)
       ),
     ).toBeTruthy();
     const result = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
       .analyze();
     expect(result.violations).toEqual([]);
     expect(errors).toEqual([]);
@@ -88,7 +88,7 @@ test("Mobile menu keyboard dismissal", async ({ page, isMobile }) => {
   await expect(page.locator(".menu-toggle")).toBeFocused();
 });
 
-test("3D controls and rendering telemetry", async ({ page }) => {
+test("3D controls and rendering telemetry", async ({ page, isMobile }) => {
   await page.goto("./");
   await expect(page.locator("#globe")).toBeVisible();
   await expect(page.locator(".globe-stage")).toHaveAttribute(

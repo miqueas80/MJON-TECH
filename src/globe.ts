@@ -180,7 +180,7 @@ export async function mountGlobe(canvas: HTMLCanvasElement) {
     innerWidth,
     (navigator as Navigator & { deviceMemory?: number }).deviceMemory,
   );
-  let paused = reduce.matches,
+  let paused = reduce.matches || matchMedia("(max-width:760px)").matches,
     visible = true,
     lost = false,
     disposed = false,

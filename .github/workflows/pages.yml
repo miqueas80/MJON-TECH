@@ -34,6 +34,17 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+  configure-pages:
+    if: github.ref == 'refs/heads/feat/ultimate-digital-experience'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+    steps:
+      - name: Select GitHub Actions as Pages source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow --jq '.build_type'
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: verify

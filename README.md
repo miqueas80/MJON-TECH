@@ -41,7 +41,7 @@ npm run preview
 
 ## Accesibilidad y gráficos
 
-Pausa visible, teclado (flechas, +/−, Inicio), alternativa estática sin WebGL, opt-in con movimiento reducido o ahorro de datos. Render detenido fuera de pantalla y con pestaña oculta. Resolución inicial acotada por pantalla/memoria y descenso automático ante cuadros lentos. `data-fps`, `data-frame-ms` y `data-quality` exponen muestras locales en `.globe-stage`; no se envían. No equivalen a una garantía de FPS.
+Rotación automática pausada inicialmente en pantallas pequeñas para ahorrar CPU y batería, con activación opcional. Pausa visible, teclado (flechas, +/−, Inicio), alternativa estática sin WebGL, opt-in con movimiento reducido o ahorro de datos. Render detenido fuera de pantalla y con pestaña oculta. Resolución inicial acotada por pantalla/memoria y descenso automático ante cuadros lentos. `data-fps`, `data-frame-ms` y `data-quality` exponen muestras locales en `.globe-stage`; no se envían. No equivalen a una garantía de FPS.
 
 ## Publicación
 
