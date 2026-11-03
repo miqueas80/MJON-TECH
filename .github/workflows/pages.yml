@@ -31,31 +31,43 @@ jobs:
             playwright-report/
             test-results/
             reports/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: dist
+          include-hidden-files: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-  configure-pages:
-    if: github.ref == 'refs/heads/feat/ultimate-digital-experience'
-    needs: verify
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-    steps:
-      - name: Select GitHub Actions as Pages source
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow --jq '.build_type'
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: verify
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/download-artifact@v4
+        with:
+          name: production-build
+          path: dist
+      - name: Preserve a verified snapshot for the existing Pages source
+        run: |
+          node scripts/sync-pages.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish verified Pages snapshot [skip ci]'
+            git push origin HEAD:main
+          fi
       - uses: actions/configure-pages@v5
         with:
           enablement: true

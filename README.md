@@ -2,7 +2,7 @@
 
 Sitio empresarial estático, accesible y con una experiencia 3D opcional.
 
-**Producción prevista:** https://miqueas80.github.io/MJON-TECH/
+**Sitio:** https://miqueas80.github.io/MJON-TECH/
 
 ## Desarrollo
 
@@ -16,7 +16,7 @@ npm test
 npm run preview
 ```
 
-`npm run test:browser` ejecuta Playwright y axe en escritorio y móvil. La CI instala Chromium y ejecuta también Lighthouse móvil/escritorio. Los informes y capturas quedan en el artefacto `browser-report` del workflow. `dist/` es el único resultado publicable.
+`npm run test:browser` ejecuta Playwright y axe en escritorio y móvil. La CI instala Chromium y ejecuta también Lighthouse móvil/escritorio. Los informes y capturas quedan en el artefacto `browser-report` del workflow. `dist/` es el resultado publicable. La raíz conserva una copia compilada de compatibilidad, mantenida por `scripts/sync-pages.mjs`; no editar HTML ni assets generados.
 
 ## Arquitectura
 
@@ -45,6 +45,6 @@ Rotación automática pausada inicialmente en pantallas pequeñas para ahorrar C
 
 ## Publicación
 
-GitHub Actions compila `dist/`, ejecuta verificaciones y publica mediante `actions/deploy-pages`. Base `/MJON-TECH/`. Pages debe usar **GitHub Actions** como fuente. Si el repositorio aún usa una rama como fuente y la cuenta no permite cambiarla automáticamente, se debe seleccionar Actions en Settings → Pages. Las PR y la rama de trabajo verifican sin publicar.
+GitHub Actions compila `dist/`, ejecuta verificaciones y publica mediante `actions/deploy-pages`. Base `/MJON-TECH/`. La configuración existente de Pages usa main/root. La acción oficial permite desplegar desde esa misma rama; no requiere ampliar permisos administrativos. Después de las pruebas, CI sincroniza una copia compilada en raíz y despliega el artefacto completo. Así la publicación heredada tampoco sirve TypeScript ni rutas sin compilar. La rama de trabajo verifica sin publicar. Los mapas de fuente se incluyen en el artefacto de producción, no en la copia de compatibilidad.
 
 Conservar el historial para volver al commit anterior si una entrega falla. Ningún cambio se realizó a los repositorios de los productos.
