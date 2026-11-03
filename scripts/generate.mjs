@@ -5,7 +5,7 @@ const site = "https://miqueas80.github.io" + base;
 const wa = "https://wa.me/543436959552";
 const arrow = '<span aria-hidden="true">↗</span>';
 const logo =
-  '<svg viewBox="0 0 48 32" aria-hidden="true"><path d="M2 29 11 3 24 17 40 3 46 29H35l2-12-14 12-10-12-3 12Z" fill="currentColor"/></svg><span>MJON<span class="logo-sub">TECH</span></span>';
+  '<svg viewBox="0 0 48 32" aria-hidden="true"><path d="M2 29 11 3 24 17 40 3 46 29H35l2-12-14 12-10-12-3 12Z" fill="currentColor"/></svg><span>MJON <span class="logo-sub">TECH</span></span>';
 const e = (s) =>
   String(s)
     .replaceAll("&", "&amp;")
@@ -23,7 +23,7 @@ function cta() {
 }
 function shell(file, title, desc, body, active = "") {
   const url = file === "index" ? site : site + file + ".html";
-  return `<!doctype html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050914"><meta name="description" content="${e(desc)}"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' ws:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"><title>${e(title)} — MJON TECH</title><link rel="canonical" href="${url}"><meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:title" content="${e(title)} — MJON TECH"><meta property="og:description" content="${e(desc)}"><meta property="og:url" content="${url}"><meta property="og:image" content="${site}assets/globe-fallback.webp"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${base}favicon.svg" type="image/svg+xml"><script type="module" src="/src/main.ts"></script></head><body>${header(active)}<main id="contenido">${body}</main>${footer()}</body></html>`;
+  return `<!doctype html><html lang="es-AR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050914"><meta name="description" content="${e(desc)}"><meta name="referrer" content="strict-origin-when-cross-origin"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"><title>${e(title)} — MJON TECH</title><link rel="canonical" href="${url}"><meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:title" content="${e(title)} — MJON TECH"><meta property="og:description" content="${e(desc)}"><meta property="og:url" content="${url}"><meta property="og:image" content="${site}assets/globe-fallback.webp"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${base}favicon.svg" type="image/svg+xml"><script type="module" src="/src/main.ts"></script></head><body>${header(active)}<main id="contenido">${body}</main>${footer()}</body></html>`;
 }
 function art(p) {
   const common = `viewBox="0 0 600 420" fill="none" role="img" aria-label="Ilustración conceptual de ${p.name}"`;

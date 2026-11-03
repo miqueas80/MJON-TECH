@@ -173,6 +173,9 @@ export async function mountGlobe(canvas: HTMLCanvasElement) {
       }),
     ),
   );
+  // Compile GPU programs before the first draw without synchronously waiting on every shader.
+  await renderer.compileAsync(scene, camera);
+
   let quality = initialQuality(
     innerWidth,
     (navigator as Navigator & { deviceMemory?: number }).deviceMemory,
@@ -193,15 +196,19 @@ export async function mountGlobe(canvas: HTMLCanvasElement) {
     frames = 0,
     totalMs = 0,
     shown = false;
+  let lastSize = "";
   function resize() {
     const r = stage.getBoundingClientRect();
     if (!r.width || !r.height) return;
+    const sizeKey = `${r.width}:${r.height}:${quality}`;
+    if (sizeKey === lastSize) return;
+    lastSize = sizeKey;
     camera.aspect = r.width / r.height;
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(devicePixelRatio, quality));
     renderer.setSize(r.width, r.height, false);
     stage.dataset.quality = String(quality);
-    drawOnce();
+    if (shown) drawOnce();
   }
   function render(dt = 0) {
     if (disposed || lost) return;
@@ -339,6 +346,7 @@ export async function mountGlobe(canvas: HTMLCanvasElement) {
     drawOnce();
   });
   const observer = new IntersectionObserver((entries) => {
+    if (visible === entries[0].isIntersecting) return;
     visible = entries[0].isIntersecting;
     schedule();
   });

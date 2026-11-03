@@ -1,4 +1,5 @@
 import lighthouse from "lighthouse";
+import desktopConfig from "lighthouse/core/config/desktop-config.js";
 import { launch } from "chrome-launcher";
 import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -23,9 +24,9 @@ try {
       port: chrome.port,
       output: "json",
       onlyCategories: ["performance", "accessibility", "best-practices", "seo"],
-      ...(preset === "desktop" ? { preset: "desktop" } : {}),
+
     };
-    const result = await lighthouse(url, flags);
+    const result = await lighthouse(url, flags, preset === "desktop" ? desktopConfig : undefined);
     if (!result?.lhr || result.lhr.runtimeError)
       throw Error(JSON.stringify(result?.lhr.runtimeError));
     writeFileSync(
@@ -34,6 +35,7 @@ try {
     );
     const summary = {
       preset,
+      actualFormFactor: result.lhr.configSettings.formFactor,
       categories: Object.fromEntries(
         Object.entries(result.lhr.categories).map(([k, v]) => [k, v.score]),
       ),

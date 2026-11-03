@@ -5,6 +5,7 @@ export default defineConfig({
   base: "/MJON-TECH/",
   build: {
     target: "es2022",
+    sourcemap: true,
     rollupOptions: {
       input: Object.fromEntries(
         readdirSync(".")
