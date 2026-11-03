@@ -95,6 +95,10 @@ test("3D controls and rendering telemetry", async ({ page, isMobile }) => {
     "data-renderer",
     "webgl2",
   );
+  if (isMobile) {
+    await expect(page.locator("#motion-toggle")).toHaveAttribute("aria-pressed", "true");
+    await page.locator("#motion-toggle").click();
+  }
   await expect(page.locator(".globe-stage")).toHaveAttribute("data-fps", /.+/, {
     timeout: 15000,
   });
